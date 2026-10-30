@@ -3,6 +3,7 @@ name: Main
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   build-and-run:
@@ -52,7 +53,7 @@ jobs:
       - name: Enable auto-merge
         run: gh pr merge --auto --squash "${{ github.event.pull_request.number }}"
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.AUTOMERGE_TOKEN || secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
 
   docs:
@@ -84,5 +85,5 @@ jobs:
 
       - name: Deploy to GitHub Pages
         id: deploy
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         uses: actions/deploy-pages@v4
