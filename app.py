@@ -2,6 +2,8 @@
 
 from flask import Flask, jsonify, request
 
+__version__ = "1.0.0"
+
 app = Flask(__name__)
 
 
