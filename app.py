@@ -1,3 +1,5 @@
+"""Simple Flask service with a liveness probe and an integer addition endpoint."""
+
 from flask import Flask, jsonify, request
 
 __version__ = "1.0.0"
