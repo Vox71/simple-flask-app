@@ -114,3 +114,23 @@ def test_calc_unknown_operation_returns_400():
     response = make_client().get("/calc?op=pow&a=2&b=3")
     assert response.status_code == 400
     assert "error" in response.get_json()
+
+
+def test_calc_accepts_float_params():
+    response = make_client().get("/calc?op=add&a=2.5&b=0.5")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 3.0}
+
+
+def test_calc_preserves_integer_results():
+    response = make_client().get("/calc?op=add&a=2&b=3")
+    result = response.get_json()["result"]
+    assert result == 5
+    assert isinstance(result, int)
+
+
+def test_calc_divide_returns_float():
+    response = make_client().get("/calc?op=divide&a=8&b=2")
+    result = response.get_json()["result"]
+    assert result == 4.0
+    assert isinstance(result, float)
