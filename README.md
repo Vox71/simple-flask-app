@@ -32,9 +32,12 @@ pip install -r requirements-dev.txt
 python -m pytest
 ```
 
-## Documentation
+## CI and Documentation
+
+GitHub Actions runs the test suite from `.github/workflows/tests.yml` on pushes to
+`main` and `development` and on pull requests.
 
 The API reference is generated from docstrings by [pdoc](https://pdoc.dev) on every
-push (see the `docs` job in `.github/workflows/Main.yml`) and published to GitHub Pages:
+push to `main` (see `.github/workflows/docs.yml`) and published to GitHub Pages:
 
 <https://vox71.github.io/simple-flask-app/>
