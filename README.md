@@ -1,7 +1,7 @@
 # simple-flask-app
 
-Educational Flask service with a liveness probe and an integer addition endpoint.
-Version: **1.0.0**
+Educational Flask service with a liveness probe, a legacy addition endpoint, and a calculator API.
+Version: **1.1.0**
 
 ## Endpoints
 
@@ -9,6 +9,18 @@ Version: **1.0.0**
 | ------ | ---- | ----------- | ---------------- |
 | GET | `/health` | Liveness probe | `{"status": "ok"}` |
 | GET | `/add?a=2&b=3` | Sum of two integers, `400` if a parameter is missing or not an integer | `{"result": 5}` |
+| GET | `/calc?op=add&a=2&b=3` | Calculator API: `add`, `subtract`, `multiply`, `divide` | `{"result": 5}` |
+
+### Calculator operations
+
+| `op` | Description |
+| ---- | ----------- |
+| `add` | Addition |
+| `subtract` | Subtraction |
+| `multiply` | Multiplication |
+| `divide` | Division; returns `float`, `400` on division by zero |
+
+`/calc` accepts integer and float values. Missing or non-numeric parameters return `400`.
 
 ## Run locally
 

@@ -1,15 +1,20 @@
-"""Simple Flask service with a liveness probe and an integer addition endpoint."""
+"""Simple Flask service with a liveness probe, a legacy addition endpoint, and a calculator API."""
 
 from flask import Flask, jsonify, request
 
-__version__ = "1.0.0"
+from calculator import add, calculate
+
+__version__ = "1.1.0"
 
 app = Flask(__name__)
 
 
-def add(a: int, b: int) -> int:
-    """Return the sum of two integers."""
-    return a + b
+def _parse_number(value: str) -> int | float:
+    """Parse a query-string number, preferring integers."""
+    try:
+        return int(value)
+    except ValueError:
+        return float(value)
 
 
 @app.get("/health")
@@ -26,6 +31,25 @@ def add_endpoint():
     if a is None or b is None:
         return jsonify(error="params 'a' and 'b' must be integers"), 400
     return jsonify(result=add(a, b)), 200
+
+
+@app.get("/calc")
+def calc_endpoint():
+    """Return the result of a calculator operation."""
+    op = request.args.get("op")
+    a_raw = request.args.get("a")
+    b_raw = request.args.get("b")
+    if op is None or a_raw is None or b_raw is None:
+        return jsonify(error="params op, a and b are required"), 400
+    try:
+        a = _parse_number(a_raw)
+        b = _parse_number(b_raw)
+    except ValueError:
+        return jsonify(error="params a and b must be numbers"), 400
+    try:
+        return jsonify(result=calculate(op, a, b)), 200
+    except ValueError as exc:
+        return jsonify(error=str(exc)), 400
 
 
 if __name__ == "__main__":

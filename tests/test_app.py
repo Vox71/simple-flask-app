@@ -42,3 +42,95 @@ def test_add_invalid_param():
 def test_add_no_params():
     response = make_client().get("/add")
     assert response.status_code == 400
+
+
+def test_calc_add_endpoint():
+    response = make_client().get("/calc?op=add&a=2&b=3")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 5}
+
+
+def test_calc_subtract_endpoint():
+    response = make_client().get("/calc?op=subtract&a=7&b=4")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 3}
+
+
+def test_calc_multiply_endpoint():
+    response = make_client().get("/calc?op=multiply&a=3&b=4")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 12}
+
+
+def test_calc_divide_endpoint():
+    response = make_client().get("/calc?op=divide&a=8&b=2")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 4.0}
+
+
+def test_calc_divide_fractional():
+    response = make_client().get("/calc?op=divide&a=7&b=2")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 3.5}
+
+
+def test_calc_divide_by_zero_returns_400():
+    response = make_client().get("/calc?op=divide&a=1&b=0")
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "division by zero"}
+
+
+def test_calc_missing_a_returns_400():
+    response = make_client().get("/calc?op=add&b=3")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
+
+
+def test_calc_missing_b_returns_400():
+    response = make_client().get("/calc?op=add&a=2")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
+
+
+def test_calc_missing_op_returns_400():
+    response = make_client().get("/calc?a=2&b=3")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
+
+
+def test_calc_invalid_a_returns_400():
+    response = make_client().get("/calc?op=add&a=x&b=1")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
+
+
+def test_calc_invalid_b_returns_400():
+    response = make_client().get("/calc?op=add&a=1&b=x")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
+
+
+def test_calc_unknown_operation_returns_400():
+    response = make_client().get("/calc?op=pow&a=2&b=3")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
+
+
+def test_calc_accepts_float_params():
+    response = make_client().get("/calc?op=add&a=2.5&b=0.5")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 3.0}
+
+
+def test_calc_preserves_integer_results():
+    response = make_client().get("/calc?op=add&a=2&b=3")
+    result = response.get_json()["result"]
+    assert result == 5
+    assert isinstance(result, int)
+
+
+def test_calc_divide_returns_float():
+    response = make_client().get("/calc?op=divide&a=8&b=2")
+    result = response.get_json()["result"]
+    assert result == 4.0
+    assert isinstance(result, float)
