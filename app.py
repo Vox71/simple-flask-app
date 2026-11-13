@@ -2,14 +2,11 @@
 
 from flask import Flask, jsonify, request
 
+from calculator import add
+
 __version__ = "1.0.0"
 
 app = Flask(__name__)
-
-
-def add(a: int, b: int) -> int:
-    """Return the sum of two integers."""
-    return a + b
 
 
 @app.get("/health")
