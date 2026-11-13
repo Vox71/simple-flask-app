@@ -28,7 +28,7 @@ jobs:
         run: pip install -r requirements-docs.txt
 
       - name: Generate docs
-        run: pdoc ./app.py -o site
+        run: pdoc ./app.py ./calculator.py -o site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
