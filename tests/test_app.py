@@ -48,3 +48,9 @@ def test_calc_add_endpoint():
     response = make_client().get("/calc?op=add&a=2&b=3")
     assert response.status_code == 200
     assert response.get_json() == {"result": 5}
+
+
+def test_calc_subtract_endpoint():
+    response = make_client().get("/calc?op=subtract&a=7&b=4")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 3}
