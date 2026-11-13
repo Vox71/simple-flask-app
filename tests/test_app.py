@@ -72,3 +72,9 @@ def test_calc_divide_fractional():
     response = make_client().get("/calc?op=divide&a=7&b=2")
     assert response.status_code == 200
     assert response.get_json() == {"result": 3.5}
+
+
+def test_calc_divide_by_zero_returns_400():
+    response = make_client().get("/calc?op=divide&a=1&b=0")
+    assert response.status_code == 400
+    assert response.get_json() == {"error": "division by zero"}
