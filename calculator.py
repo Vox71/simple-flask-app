@@ -21,3 +21,18 @@ def divide(a: int, b: int) -> float:
     if b == 0:
         raise ValueError("division by zero")
     return a / b
+
+
+_OPERATIONS = {
+    "add": add,
+    "subtract": subtract,
+    "multiply": multiply,
+    "divide": divide,
+}
+
+
+def calculate(operation: str, a: int, b: int) -> int | float:
+    """Return the result of the requested operation."""
+    if operation not in _OPERATIONS:
+        raise ValueError(f"unsupported operation: {operation}")
+    return _OPERATIONS[operation](a, b)

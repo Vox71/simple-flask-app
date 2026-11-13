@@ -108,3 +108,9 @@ def test_calc_invalid_b_returns_400():
     response = make_client().get("/calc?op=add&a=1&b=x")
     assert response.status_code == 400
     assert "error" in response.get_json()
+
+
+def test_calc_unknown_operation_returns_400():
+    response = make_client().get("/calc?op=pow&a=2&b=3")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
