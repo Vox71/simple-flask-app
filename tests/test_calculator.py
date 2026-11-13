@@ -1,3 +1,5 @@
+import pytest
+
 from calculator import add, divide, multiply, subtract
 
 
@@ -55,3 +57,13 @@ def test_divide_negative():
 
 def test_divide_zero_numerator():
     assert divide(0, 5) == 0.0
+
+
+def test_divide_by_zero_raises_value_error():
+    with pytest.raises(ValueError, match="division by zero"):
+        divide(1, 0)
+
+
+def test_divide_zero_by_zero_raises_value_error():
+    with pytest.raises(ValueError, match="division by zero"):
+        divide(0, 0)
