@@ -1,4 +1,4 @@
-from calculator import add, subtract
+from calculator import add, multiply, subtract
 
 
 def test_add_positive_integers():
@@ -27,3 +27,15 @@ def test_subtract_negative_operands():
 
 def test_subtract_zero():
     assert subtract(0, 0) == 0
+
+
+def test_multiply_positive_integers():
+    assert multiply(3, 4) == 12
+
+
+def test_multiply_negative():
+    assert multiply(-3, 4) == -12
+
+
+def test_multiply_zero():
+    assert multiply(0, 99) == 0
