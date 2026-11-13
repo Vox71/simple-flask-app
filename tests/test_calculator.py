@@ -1,6 +1,6 @@
 import pytest
 
-from calculator import add, divide, multiply, subtract
+from calculator import add, calculate, divide, multiply, subtract
 
 
 def test_add_positive_integers():
@@ -67,3 +67,15 @@ def test_divide_by_zero_raises_value_error():
 def test_divide_zero_by_zero_raises_value_error():
     with pytest.raises(ValueError, match="division by zero"):
         divide(0, 0)
+
+
+def test_calculate_dispatches_operations():
+    assert calculate("add", 2, 3) == 5
+    assert calculate("subtract", 7, 4) == 3
+    assert calculate("multiply", 3, 4) == 12
+    assert calculate("divide", 8, 2) == 4.0
+
+
+def test_calculate_unknown_operation_raises_value_error():
+    with pytest.raises(ValueError, match="unsupported operation"):
+        calculate("pow", 2, 3)
