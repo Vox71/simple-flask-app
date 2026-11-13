@@ -9,6 +9,14 @@ __version__ = "1.0.0"
 app = Flask(__name__)
 
 
+def _parse_number(value: str) -> int | float:
+    """Parse a query-string number, preferring integers."""
+    try:
+        return int(value)
+    except ValueError:
+        return float(value)
+
+
 @app.get("/health")
 def health():
     """Liveness probe: returns 200 while the app is running."""
@@ -33,9 +41,10 @@ def calc_endpoint():
     b_raw = request.args.get("b")
     if op is None or a_raw is None or b_raw is None:
         return jsonify(error="params op, a and b are required"), 400
-    a = request.args.get("a", type=int)
-    b = request.args.get("b", type=int)
-    if a is None or b is None:
+    try:
+        a = _parse_number(a_raw)
+        b = _parse_number(b_raw)
+    except ValueError:
         return jsonify(error="params a and b must be numbers"), 400
     try:
         return jsonify(result=calculate(op, a, b)), 200
