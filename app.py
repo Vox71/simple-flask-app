@@ -2,7 +2,7 @@
 
 from flask import Flask, jsonify, request
 
-from calculator import add, multiply, subtract
+from calculator import add, divide, multiply, subtract
 
 __version__ = "1.0.0"
 
@@ -37,6 +37,8 @@ def calc_endpoint():
         return jsonify(result=subtract(a, b)), 200
     if op == "multiply":
         return jsonify(result=multiply(a, b)), 200
+    if op == "divide":
+        return jsonify(result=divide(a, b)), 200
     return jsonify(error="unsupported operation"), 400
 
 

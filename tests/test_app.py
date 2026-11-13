@@ -60,3 +60,15 @@ def test_calc_multiply_endpoint():
     response = make_client().get("/calc?op=multiply&a=3&b=4")
     assert response.status_code == 200
     assert response.get_json() == {"result": 12}
+
+
+def test_calc_divide_endpoint():
+    response = make_client().get("/calc?op=divide&a=8&b=2")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 4.0}
+
+
+def test_calc_divide_fractional():
+    response = make_client().get("/calc?op=divide&a=7&b=2")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 3.5}
