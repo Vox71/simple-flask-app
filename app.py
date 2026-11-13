@@ -1,10 +1,10 @@
-"""Simple Flask service with a liveness probe and an integer addition endpoint."""
+"""Simple Flask service with a liveness probe, a legacy addition endpoint, and a calculator API."""
 
 from flask import Flask, jsonify, request
 
 from calculator import add, calculate
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 
 app = Flask(__name__)
 
