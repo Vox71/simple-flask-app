@@ -54,3 +54,9 @@ def test_calc_subtract_endpoint():
     response = make_client().get("/calc?op=subtract&a=7&b=4")
     assert response.status_code == 200
     assert response.get_json() == {"result": 3}
+
+
+def test_calc_multiply_endpoint():
+    response = make_client().get("/calc?op=multiply&a=3&b=4")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 12}
