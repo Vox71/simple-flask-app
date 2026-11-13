@@ -1,4 +1,4 @@
-from calculator import add, multiply, subtract
+from calculator import add, divide, multiply, subtract
 
 
 def test_add_positive_integers():
@@ -39,3 +39,19 @@ def test_multiply_negative():
 
 def test_multiply_zero():
     assert multiply(0, 99) == 0
+
+
+def test_divide_positive_integers():
+    assert divide(8, 2) == 4.0
+
+
+def test_divide_returns_float():
+    assert divide(7, 2) == 3.5
+
+
+def test_divide_negative():
+    assert divide(-8, 2) == -4.0
+
+
+def test_divide_zero_numerator():
+    assert divide(0, 5) == 0.0
