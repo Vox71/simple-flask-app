@@ -38,7 +38,10 @@ def calc_endpoint():
     if op == "multiply":
         return jsonify(result=multiply(a, b)), 200
     if op == "divide":
-        return jsonify(result=divide(a, b)), 200
+        try:
+            return jsonify(result=divide(a, b)), 200
+        except ValueError as exc:
+            return jsonify(error=str(exc)), 400
     return jsonify(error="unsupported operation"), 400
 
 
