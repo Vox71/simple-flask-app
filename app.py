@@ -25,5 +25,16 @@ def add_endpoint():
     return jsonify(result=add(a, b)), 200
 
 
+@app.get("/calc")
+def calc_endpoint():
+    """Return the result of a calculator operation."""
+    op = request.args.get("op")
+    a = request.args.get("a", type=int)
+    b = request.args.get("b", type=int)
+    if op == "add":
+        return jsonify(result=add(a, b)), 200
+    return jsonify(error="unsupported operation"), 400
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

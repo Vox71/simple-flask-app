@@ -42,3 +42,9 @@ def test_add_invalid_param():
 def test_add_no_params():
     response = make_client().get("/add")
     assert response.status_code == 400
+
+
+def test_calc_add_endpoint():
+    response = make_client().get("/calc?op=add&a=2&b=3")
+    assert response.status_code == 200
+    assert response.get_json() == {"result": 5}
