@@ -29,6 +29,10 @@ def add_endpoint():
 def calc_endpoint():
     """Return the result of a calculator operation."""
     op = request.args.get("op")
+    a_raw = request.args.get("a")
+    b_raw = request.args.get("b")
+    if op is None or a_raw is None or b_raw is None:
+        return jsonify(error="params op, a and b are required"), 400
     a = request.args.get("a", type=int)
     b = request.args.get("b", type=int)
     if op == "add":

@@ -78,3 +78,21 @@ def test_calc_divide_by_zero_returns_400():
     response = make_client().get("/calc?op=divide&a=1&b=0")
     assert response.status_code == 400
     assert response.get_json() == {"error": "division by zero"}
+
+
+def test_calc_missing_a_returns_400():
+    response = make_client().get("/calc?op=add&b=3")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
+
+
+def test_calc_missing_b_returns_400():
+    response = make_client().get("/calc?op=add&a=2")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
+
+
+def test_calc_missing_op_returns_400():
+    response = make_client().get("/calc?a=2&b=3")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
