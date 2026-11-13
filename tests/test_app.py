@@ -96,3 +96,15 @@ def test_calc_missing_op_returns_400():
     response = make_client().get("/calc?a=2&b=3")
     assert response.status_code == 400
     assert "error" in response.get_json()
+
+
+def test_calc_invalid_a_returns_400():
+    response = make_client().get("/calc?op=add&a=x&b=1")
+    assert response.status_code == 400
+    assert "error" in response.get_json()
+
+
+def test_calc_invalid_b_returns_400():
+    response = make_client().get("/calc?op=add&a=1&b=x")
+    assert response.status_code == 400
+    assert "error" in response.get_json()

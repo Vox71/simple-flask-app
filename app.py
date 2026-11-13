@@ -35,6 +35,8 @@ def calc_endpoint():
         return jsonify(error="params op, a and b are required"), 400
     a = request.args.get("a", type=int)
     b = request.args.get("b", type=int)
+    if a is None or b is None:
+        return jsonify(error="params a and b must be numbers"), 400
     if op == "add":
         return jsonify(result=add(a, b)), 200
     if op == "subtract":
